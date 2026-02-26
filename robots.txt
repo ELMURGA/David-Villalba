@@ -1,0 +1,28 @@
+# robots.txt para David Villalba Decorador
+# Interiorismo en Sevilla y Utrera
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /assets/img/
+
+# Rutas excluidas
+Disallow: /studio/
+Disallow: /node_modules/
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://david-villalba.com/sitemap.xml
+
+# Crawl-delay (opcional, para controlar la velocidad de rastreo)
+# Crawl-delay: 1
+
+# Configuración específica para motores de búsqueda
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/img/
+
+User-agent: Bingbot
+Allow: /

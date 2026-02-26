@@ -1,0 +1,125 @@
+# .htaccess - Configuración para optimización SEO
+# David Villalba Decorador - Interiorismo Sevilla
+
+# ============================================
+# REDIRECCIONES Y CONFIGURACIÓN DE DOMINIO
+# ============================================
+
+# Habilitar el motor de reescritura
+RewriteEngine On
+
+# Forzar HTTPS (descomentar cuando tengas SSL activo)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Forzar WWW o NO-WWW (elige uno, aquí sin www)
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# ============================================
+# COMPRESIÓN GZIP
+# ============================================
+<IfModule mod_deflate.c>
+    # Comprimir HTML, CSS, JavaScript, Text, XML y fuentes
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE application/x-font
+    AddOutputFilterByType DEFLATE application/x-font-opentype
+    AddOutputFilterByType DEFLATE application/x-font-otf
+    AddOutputFilterByType DEFLATE application/x-font-truetype
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+</IfModule>
+
+# ============================================
+# CACHÉ DEL NAVEGADOR
+# ============================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Imágenes
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS y JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    
+    # Fuentes
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    
+    # HTML
+    ExpiresByType text/html "access plus 1 day"
+    
+    # Otros
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/json "access plus 1 day"
+</IfModule>
+
+# ============================================
+# SEGURIDAD
+# ============================================
+
+# Deshabilitar listado de directorios
+Options -Indexes
+
+# Proteger archivos sensibles
+<FilesMatch "^(\.htaccess|\.htpasswd|\.git|web\.config|composer\.json|package\.json|sanity\.config\.js|\.env)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Proteger el directorio del CMS
+<IfModule mod_rewrite.c>
+    RewriteRule ^studio/(.*)$ - [F,L]
+</IfModule>
+
+# ============================================
+# TIPOS MIME
+# ============================================
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+    AddType font/ttf .ttf
+    AddType font/otf .otf
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+</IfModule>
+
+# ============================================
+# PÁGINAS DE ERROR PERSONALIZADAS
+# ============================================
+# ErrorDocument 404 /404.html
+# ErrorDocument 500 /500.html
+
+# ============================================
+# REDIRECCIONES ESPECÍFICAS (si es necesario)
+# ============================================
+# Ejemplo: Redirect 301 /old-page.html /new-page.html
+
+# Forzar trailing slash (opcional)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_URI} !(.*)/$
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [L,R=301]

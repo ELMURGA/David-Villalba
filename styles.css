@@ -1382,3 +1382,43 @@ h4 {
     font-size: 0.72rem;
   }
 }
+
+/* ============================================
+   PROJECTS LOADING SKELETON
+   ============================================ */
+.projects__loading {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  grid-column: 1 / -1;
+}
+
+.skeleton-card {
+  aspect-ratio: 4/3;
+  background: linear-gradient(110deg, var(--bg-alt) 8%, #e8e4de 18%, var(--bg-alt) 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 2px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects__loading {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects__loading {
+    grid-template-columns: 1fr;
+  }
+}

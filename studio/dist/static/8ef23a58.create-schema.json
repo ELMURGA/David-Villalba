@@ -1,0 +1,151 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "El nombre es obligatorio"
+          }
+        ],
+        "description": "Ej: La Catalina, Almazara Club, etc.",
+        "name": "title",
+        "type": "string",
+        "title": "Nombre del Proyecto"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Restaurante",
+              "value": "Restaurante"
+            },
+            {
+              "title": "Residencial",
+              "value": "Residencial"
+            },
+            {
+              "title": "Cafetería",
+              "value": "Cafetería"
+            },
+            {
+              "title": "Tienda de Ropa",
+              "value": "Tienda de Ropa"
+            },
+            {
+              "title": "Oficina",
+              "value": "Oficina"
+            },
+            {
+              "title": "Salón de Celebraciones",
+              "value": "Salón de Celebraciones"
+            },
+            {
+              "title": "Detalle Interior",
+              "value": "Detalle Interior"
+            },
+            {
+              "title": "Oficina · Exposición",
+              "value": "Oficina · Exposición"
+            }
+          ],
+          "layout": "dropdown"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "Restaurante",
+                  "Residencial",
+                  "Cafetería",
+                  "Tienda de Ropa",
+                  "Oficina",
+                  "Salón de Celebraciones",
+                  "Detalle Interior",
+                  "Oficina · Exposición"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "El tipo es obligatorio"
+          }
+        ],
+        "description": "Ej: Restaurante, Residencial, Cafetería, Tienda de Ropa, etc.",
+        "name": "type",
+        "type": "string",
+        "title": "Tipo de Proyecto"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error",
+            "message": "La foto es obligatoria"
+          }
+        ],
+        "description": "Sube la foto principal del proyecto. Tamaño recomendado: 1200x900px.",
+        "name": "image",
+        "type": "image",
+        "title": "Foto del Proyecto"
+      },
+      {
+        "description": "Texto alternativo para buscadores. Ej: \"Restaurante La Catalina diseño interior\"",
+        "name": "alt",
+        "type": "string",
+        "title": "Descripción de la Foto (SEO)"
+      },
+      {
+        "description": "Opcional. Cómo se recorta la imagen. Ej: \"center 60%\". Déjalo vacío para centrado normal.",
+        "hidden": true,
+        "name": "objectPosition",
+        "type": "string",
+        "title": "Posición de la imagen"
+      },
+      {
+        "initialValue": 99,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Número para ordenar los proyectos. 1 = primero, 2 = segundo, etc.",
+        "name": "order",
+        "type": "number",
+        "title": "Orden"
+      }
+    ],
+    "name": "project",
+    "type": "document",
+    "title": "Proyecto"
+  }
+]
