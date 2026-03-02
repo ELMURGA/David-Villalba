@@ -3,6 +3,9 @@
     "title": "La Catalina",
     "type": "Restaurante",
     "image": "assets/img/projects/la-catalina-baja.jpg",
+    "gallery": [
+      "assets/img/projects/la-catalina-baja.jpg"
+    ],
     "alt": "La Catalina restaurante interior design",
     "order": 1
   },
@@ -10,6 +13,9 @@
     "title": "Viviendas",
     "type": "Residencial",
     "image": "assets/img/projects/interior-tienda.png",
+    "gallery": [
+      "assets/img/projects/interior-tienda.png"
+    ],
     "alt": "Proyecto de vivienda David Villalba",
     "order": 2
   },
@@ -17,6 +23,9 @@
     "title": "Alonsi",
     "type": "Restaurante",
     "image": "assets/img/projects/alonsi-portada.jpg",
+    "gallery": [
+      "assets/img/projects/alonsi-portada.jpg"
+    ],
     "alt": "Restaurante Alonsi proyecto",
     "order": 3
   },
@@ -24,6 +33,9 @@
     "title": "Almazara Club",
     "type": "Restaurante",
     "image": "assets/img/projects/almazara-portada.jpg",
+    "gallery": [
+      "assets/img/projects/almazara-portada.jpg"
+    ],
     "alt": "Almazara Club proyecto",
     "order": 4
   },
@@ -31,6 +43,9 @@
     "title": "Eventos Esencia",
     "type": "Oficina · Exposición",
     "image": "assets/img/projects/esencia-portada.jpg",
+    "gallery": [
+      "assets/img/projects/esencia-portada.jpg"
+    ],
     "alt": "Eventos Esencia oficina exposición",
     "order": 5
   },
@@ -38,6 +53,9 @@
     "title": "Bambalina",
     "type": "Tienda de Ropa",
     "image": "assets/img/projects/bambalina-portada.jpg",
+    "gallery": [
+      "assets/img/projects/bambalina-portada.jpg"
+    ],
     "alt": "Bambalina tienda de ropa",
     "order": 6
   },
@@ -45,6 +63,9 @@
     "title": "Salón Vivienda",
     "type": "Residencial",
     "image": "assets/img/projects/salon-vivienda.png",
+    "gallery": [
+      "assets/img/projects/salon-vivienda.png"
+    ],
     "alt": "Salón vivienda diseño interior",
     "order": 7
   },
@@ -52,6 +73,9 @@
     "title": "Hacienda Doña Elena",
     "type": "Salón de Celebraciones",
     "image": "assets/img/projects/hacienda-portada.jpg",
+    "gallery": [
+      "assets/img/projects/hacienda-portada.jpg"
+    ],
     "alt": "Hacienda Doña Elena celebraciones",
     "order": 8
   },
@@ -59,6 +83,9 @@
     "title": "Khumara",
     "type": "Cafetería",
     "image": "assets/img/projects/khumara-portada.jpg",
+    "gallery": [
+      "assets/img/projects/khumara-portada.jpg"
+    ],
     "alt": "Khumara cafetería proyecto",
     "order": 9
   },
@@ -66,6 +93,9 @@
     "title": "Rincón Decorativo",
     "type": "Detalle Interior",
     "image": "assets/img/projects/rincon-planta.png",
+    "gallery": [
+      "assets/img/projects/rincon-planta.png"
+    ],
     "alt": "Rincón decorativo con planta",
     "objectPosition": "center 60%",
     "order": 10
@@ -74,6 +104,9 @@
     "title": "Salón Comedor",
     "type": "Residencial",
     "image": "assets/img/projects/salon.png",
+    "gallery": [
+      "assets/img/projects/salon.png"
+    ],
     "alt": "Salón comedor diseño David Villalba",
     "objectPosition": "center 30%",
     "order": 11
@@ -82,6 +115,9 @@
     "title": "Entrada Patio",
     "type": "Residencial",
     "image": "assets/img/projects/entrada-patio.png",
+    "gallery": [
+      "assets/img/projects/entrada-patio.png"
+    ],
     "alt": "Entrada patio diseño interior",
     "objectPosition": "center 40%",
     "order": 12

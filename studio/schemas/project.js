@@ -44,6 +44,20 @@ export default defineType({
             validation: (Rule) => Rule.required().error('La foto es obligatoria'),
         }),
         defineField({
+            name: 'gallery',
+            title: 'Galería de Fotos',
+            type: 'array',
+            of: [
+                {
+                    type: 'image',
+                    options: {
+                        hotspot: true,
+                    },
+                },
+            ],
+            description: 'Sube fotos adicionales del proyecto. Se mostrarán en el lightbox cuando el usuario haga clic en el proyecto.',
+        }),
+        defineField({
             name: 'alt',
             title: 'Descripción de la Foto (SEO)',
             type: 'string',

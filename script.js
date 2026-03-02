@@ -23,19 +23,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1) Intentar cargar desde Sanity CMS
     if (SANITY_PROJECT_ID !== 'TU_PROJECT_ID') {
       try {
-        const query = encodeURIComponent('*[_type == "project"] | order(order asc) { title, type, "imageUrl": image.asset->url, alt, objectPosition, order }');
+        const query = encodeURIComponent('*[_type == "project"] | order(order asc) { title, type, "imageUrl": image.asset->url, "galleryUrls": gallery[].asset->url, alt, objectPosition, order }');
         const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${query}`;
         const response = await fetch(url);
         if (response.ok) {
           const data = await response.json();
           if (data.result && data.result.length > 0) {
-            projects = data.result.map(p => ({
-              title: p.title,
-              type: p.type,
-              image: p.imageUrl,
-              alt: p.alt || `${p.title} proyecto`,
-              objectPosition: p.objectPosition || null
-            }));
+            projects = data.result.map(p => {
+              const gallery = [p.imageUrl];
+              if (p.galleryUrls && p.galleryUrls.length > 0) {
+                p.galleryUrls.forEach(url => {
+                  if (url && !gallery.includes(url)) gallery.push(url);
+                });
+              }
+              return {
+                title: p.title,
+                type: p.type,
+                image: p.imageUrl,
+                gallery: gallery,
+                alt: p.alt || `${p.title} proyecto`,
+                objectPosition: p.objectPosition || null
+              };
+            });
           }
         }
       } catch (err) {
@@ -100,6 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
       card.appendChild(img);
       card.appendChild(overlay);
       container.appendChild(card);
+
+      // Lightbox: abrir galería al hacer clic
+      const galleryImages = project.gallery && project.gallery.length > 0
+        ? project.gallery
+        : [project.image];
+      card.addEventListener('click', () => {
+        openLightbox(galleryImages, 0, project.title);
+      });
     });
 
     // Re-initialize reveal observer for new cards
@@ -334,5 +351,105 @@ document.addEventListener('DOMContentLoaded', () => {
       hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.8;
     }
   }, { passive: true });
+
+  // ============================================
+  // LIGHTBOX / GALERÍA DE PROYECTO
+  // ============================================
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxOverlay = document.getElementById('lightboxOverlay');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+
+  let lightboxImages = [];
+  let lightboxCurrentIndex = 0;
+
+  function openLightbox(images, startIndex, title) {
+    lightboxImages = images;
+    lightboxCurrentIndex = startIndex || 0;
+
+    // Single image mode — hide arrows & counter
+    if (images.length <= 1) {
+      lightbox.classList.add('lightbox--single');
+    } else {
+      lightbox.classList.remove('lightbox--single');
+    }
+
+    // Set title
+    lightboxTitle.textContent = title || '';
+
+    // Show lightbox
+    showLightboxImage();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+    // Clear image after animation
+    setTimeout(() => {
+      lightboxImage.src = '';
+      lightboxImage.classList.remove('loaded');
+    }, 350);
+  }
+
+  function showLightboxImage() {
+    const src = lightboxImages[lightboxCurrentIndex];
+    lightboxImage.classList.remove('loaded');
+
+    // Preload
+    const preload = new Image();
+    preload.onload = () => {
+      lightboxImage.src = src;
+      lightboxImage.alt = `Imagen ${lightboxCurrentIndex + 1}`;
+      // Trigger loaded after a tiny delay for smooth transition
+      requestAnimationFrame(() => {
+        lightboxImage.classList.add('loaded');
+      });
+    };
+    preload.src = src;
+
+    // Update counter
+    lightboxCounter.textContent = `${lightboxCurrentIndex + 1} / ${lightboxImages.length}`;
+
+    // Preload next image
+    if (lightboxCurrentIndex + 1 < lightboxImages.length) {
+      const nextPreload = new Image();
+      nextPreload.src = lightboxImages[lightboxCurrentIndex + 1];
+    }
+  }
+
+  function lightboxGoNext() {
+    if (lightboxImages.length <= 1) return;
+    lightboxCurrentIndex = (lightboxCurrentIndex + 1) % lightboxImages.length;
+    showLightboxImage();
+  }
+
+  function lightboxGoPrev() {
+    if (lightboxImages.length <= 1) return;
+    lightboxCurrentIndex = (lightboxCurrentIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    showLightboxImage();
+  }
+
+  // Event listeners
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxOverlay.addEventListener('click', closeLightbox);
+  lightboxNext.addEventListener('click', lightboxGoNext);
+  lightboxPrev.addEventListener('click', lightboxGoPrev);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lightboxGoNext();
+    if (e.key === 'ArrowLeft') lightboxGoPrev();
+  });
+
+  // Make openLightbox available globally (used by renderProjects)
+  window.openLightbox = openLightbox;
 
 });
