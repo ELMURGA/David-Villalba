@@ -13,6 +13,17 @@ export default defineType({
             validation: (Rule) => Rule.required().error('El nombre es obligatorio'),
         }),
         defineField({
+            name: 'slug',
+            title: 'URL del Proyecto',
+            type: 'slug',
+            description: 'Se genera automáticamente. Haz clic en "Generate" después de escribir el nombre.',
+            options: {
+                source: 'title',
+                maxLength: 96,
+            },
+            validation: (Rule) => Rule.required().error('La URL es obligatoria. Haz clic en "Generate".'),
+        }),
+        defineField({
             name: 'type',
             title: 'Tipo de Proyecto',
             type: 'string',

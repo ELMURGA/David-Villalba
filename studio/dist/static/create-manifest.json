@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "createdAt": "2026-02-13T11:29:23.436Z",
+  "createdAt": "2026-03-03T09:08:51.146Z",
   "workspaces": [
     {
       "name": "david-villalba",
@@ -12,7 +12,7 @@
       "mediaLibrary": {
         "enabled": false
       },
-      "schema": "8ef23a58.create-schema.json",
+      "schema": "d0b9f640.create-schema.json",
       "tools": "aeb4fb01.create-tools.json"
     }
   ]

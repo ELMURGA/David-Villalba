@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1) Intentar cargar desde Sanity CMS
     if (SANITY_PROJECT_ID !== 'TU_PROJECT_ID') {
       try {
-        const query = encodeURIComponent('*[_type == "project"] | order(order asc) { title, type, "imageUrl": image.asset->url, "galleryUrls": gallery[].asset->url, alt, objectPosition, order }');
+        const query = encodeURIComponent('*[_type == "project"] | order(order asc) { title, type, "imageUrl": image.asset->url, "galleryUrls": gallery[].asset->url, alt, objectPosition, order, "slug": slug.current }');
         const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${query}`;
         const response = await fetch(url);
         if (response.ok) {
@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 image: p.imageUrl,
                 gallery: gallery,
                 alt: p.alt || `${p.title} proyecto`,
-                objectPosition: p.objectPosition || null
+                objectPosition: p.objectPosition || null,
+                slug: p.slug || null
               };
             });
           }
@@ -110,13 +111,21 @@ document.addEventListener('DOMContentLoaded', () => {
       card.appendChild(overlay);
       container.appendChild(card);
 
-      // Lightbox: abrir galería al hacer clic
-      const galleryImages = project.gallery && project.gallery.length > 0
-        ? project.gallery
-        : [project.image];
-      card.addEventListener('click', () => {
-        openLightbox(galleryImages, 0, project.title);
-      });
+      // Click: navegar a la página de detalle del proyecto
+      if (project.slug) {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+          window.location.href = `proyecto.html?slug=${encodeURIComponent(project.slug)}`;
+        });
+      } else {
+        // Fallback: abrir lightbox si no tiene slug
+        const galleryImages = project.gallery && project.gallery.length > 0
+          ? project.gallery
+          : [project.image];
+        card.addEventListener('click', () => {
+          openLightbox(galleryImages, 0, project.title);
+        });
+      }
     });
 
     // Re-initialize reveal observer for new cards
